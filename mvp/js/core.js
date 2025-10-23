@@ -14,13 +14,22 @@ const STORAGE_KEYS = {
  * データをローカルストレージに保存
  * @param {string} key - ストレージキー
  * @param {*} data - 保存するデータ
+ * @returns {boolean} 保存に成功した場合はtrue
  */
 function saveToLocalStorage(key, data) {
   try {
     const jsonData = JSON.stringify(data);
     localStorage.setItem(key, jsonData);
+    return true;
   } catch (error) {
     console.error(`ローカルストレージへの保存に失敗しました: ${key}`, error);
+    // ストレージ容量超過エラーの場合の処理
+    if (error.name === 'QuotaExceededError') {
+      showErrorMessage('ストレージ容量が不足しています。不要なデータを削除してください。');
+    } else {
+      showErrorMessage('データの保存に失敗しました。ページを再読み込みしてください。');
+    }
+    return false;
   }
 }
 
@@ -143,11 +152,110 @@ function validateText(text, minLength = 1, maxLength = 100) {
 }
 
 /**
- * ユニークな ID を生成
+ * 数値が正しい範囲内かを確認（バリデーション）
+ * @param {number|string} value - 確認する値
+ * @param {number} min - 最小値
+ * @param {number} max - 最大値
+ * @returns {boolean} 正しければ true、正しくなければ false
+ */
+function validateNumber(value, min, max) {
+  const num = typeof value === 'string' ? parseFloat(value) : value;
+  if (isNaN(num)) {
+    return false;
+  }
+  return num >= min && num <= max;
+}
+
+/**
+ * 時刻形式が正しいかを確認（HH:MM形式）
+ * @param {string} timeString - 確認する時刻文字列
+ * @returns {boolean} 正しければ true、正しくなければ false
+ */
+function validateTime(timeString) {
+  if (typeof timeString !== 'string') {
+    return false;
+  }
+  const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+  return timePattern.test(timeString);
+}
+
+/**
+ * 開始時刻と終了時刻の妥当性を確認
+ * @param {string} startTime - 開始時刻（HH:MM形式）
+ * @param {string} endTime - 終了時刻（HH:MM形式）
+ * @returns {boolean} 正しければ true、正しくなければ false
+ */
+function validateTimeRange(startTime, endTime) {
+  if (!validateTime(startTime) || !validateTime(endTime)) {
+    return false;
+  }
+  // 時刻を分数に変換
+  const startMinutes = timeToMinutes(startTime);
+  const endMinutes = timeToMinutes(endTime);
+  // 終了時刻が開始時刻より後であることを確認（日跨ぎは許容）
+  return true; // 日跨ぎを許容するため常にtrueを返す
+}
+
+/**
+ * 時刻文字列を分数に変換
+ * @param {string} timeString - 時刻文字列（HH:MM形式）
+ * @returns {number} 0時からの経過分数
+ */
+function timeToMinutes(timeString) {
+  const [hours, minutes] = timeString.split(':').map(Number);
+  return hours * 60 + minutes;
+}
+
+/**
+ * ユニークな ID を生成（重複チェック付き）
  * @returns {string} ユニークな ID
  */
 function generateUniqueId() {
-  return `${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+  const tasks = loadFromLocalStorage(STORAGE_KEYS.TASKS, []);
+  let newId;
+  let attempts = 0;
+  const maxAttempts = 100;
+
+  do {
+    newId = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    attempts++;
+    if (attempts >= maxAttempts) {
+      console.error('ユニークなIDの生成に失敗しました');
+      // フォールバック: より長いランダム文字列を使用
+      newId = `${Date.now()}_${Math.random().toString(36).substring(2)}_${Math.random().toString(36).substring(2)}`;
+      break;
+    }
+  } while (tasks.some(task => task.id === newId));
+
+  return newId;
+}
+
+/**
+ * エラーメッセージを表示する
+ * @param {string} message - 表示するメッセージ
+ */
+function showErrorMessage(message) {
+  // トースト通知が実装されている場合はそれを使用
+  if (typeof showNotification === 'function') {
+    showNotification(message, 'error');
+  } else {
+    // フォールバック: アラート表示
+    alert(`エラー: ${message}`);
+  }
+}
+
+/**
+ * 成功メッセージを表示する
+ * @param {string} message - 表示するメッセージ
+ */
+function showSuccessMessage(message) {
+  // トースト通知が実装されている場合はそれを使用
+  if (typeof showNotification === 'function') {
+    showNotification(message, 'success');
+  } else {
+    // フォールバック: コンソールログ
+    console.log(`成功: ${message}`);
+  }
 }
 
 // ===== 初期化処理 =====

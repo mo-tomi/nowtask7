@@ -5417,3 +5417,145 @@
         font-size: 12px;
     }
 }
+
+/* ============================================
+   トースト通知
+   ============================================ */
+
+/* トーストコンテナ */
+.toast-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: var(--z-tooltip);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    pointer-events: none;
+}
+
+/* トースト要素 */
+.toast {
+    background: var(--color-background-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    min-width: 300px;
+    max-width: 400px;
+    pointer-events: all;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all var(--transition-normal);
+    border: 1px solid var(--color-border-light);
+}
+
+/* トースト表示状態 */
+.toast--show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* トーストアイコン */
+.toast-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* トーストメッセージ */
+.toast-message {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-normal);
+}
+
+/* トースト閉じるボタン */
+.toast-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.toast-close:hover {
+    background: var(--color-gray-200);
+    color: var(--color-text-primary);
+}
+
+/* トーストタイプ別スタイル */
+.toast--success {
+    border-left: 4px solid var(--color-primary-700);
+}
+
+.toast--success .toast-icon {
+    color: var(--color-primary-700);
+}
+
+.toast--error {
+    border-left: 4px solid var(--color-primary-800);
+}
+
+.toast--error .toast-icon {
+    color: var(--color-primary-800);
+}
+
+.toast--warning {
+    border-left: 4px solid var(--color-primary-600);
+}
+
+.toast--warning .toast-icon {
+    color: var(--color-primary-600);
+}
+
+.toast--info {
+    border-left: 4px solid var(--color-primary-500);
+}
+
+.toast--info .toast-icon {
+    color: var(--color-primary-500);
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+    .toast-container {
+        top: 70px;
+        right: 12px;
+        left: 12px;
+    }
+
+    .toast {
+        min-width: unset;
+        max-width: unset;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .toast-container {
+        top: 60px;
+        right: 8px;
+        left: 8px;
+    }
+
+    .toast {
+        padding: var(--spacing-3);
+    }
+
+    .toast-message {
+        font-size: var(--font-size-xs);
+    }
+}

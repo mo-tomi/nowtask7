@@ -149,11 +149,106 @@
         document.addEventListener('tasksUpdated', checkAndShowWarning);
     }
 
+    // ===== トースト通知システム =====
+
+    /**
+     * トースト通知を表示
+     * @param {string} message - 表示するメッセージ
+     * @param {string} type - 通知タイプ ('success', 'error', 'warning', 'info')
+     * @param {number} duration - 表示時間（ミリ秒）デフォルト3000ms
+     */
+    function showNotification(message, type = 'info', duration = 3000) {
+        // トーストコンテナを取得または作成
+        let container = document.getElementById('toastContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        // トースト要素を作成
+        const toast = document.createElement('div');
+        toast.className = `toast toast--${type}`;
+
+        // アイコンを設定
+        let icon = '';
+        switch (type) {
+            case 'success':
+                icon = '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                break;
+            case 'error':
+                icon = '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+                break;
+            case 'warning':
+                icon = '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+                break;
+            default: // info
+                icon = '<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>';
+        }
+
+        toast.innerHTML = `
+            ${icon}
+            <span class="toast-message">${escapeHtml(message)}</span>
+            <button class="toast-close" aria-label="閉じる">×</button>
+        `;
+
+        // トーストをコンテナに追加
+        container.appendChild(toast);
+
+        // 閉じるボタンのイベントリスナー
+        const closeBtn = toast.querySelector('.toast-close');
+        closeBtn.addEventListener('click', () => {
+            removeToast(toast);
+        });
+
+        // アニメーションで表示
+        setTimeout(() => {
+            toast.classList.add('toast--show');
+        }, 10);
+
+        // 指定時間後に自動で閉じる
+        setTimeout(() => {
+            removeToast(toast);
+        }, duration);
+    }
+
+    /**
+     * トースト通知を削除
+     * @param {Element} toast - トースト要素
+     */
+    function removeToast(toast) {
+        toast.classList.remove('toast--show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }
+
+    /**
+     * HTML特殊文字をエスケープ（XSS対策）
+     * @param {string} text - エスケープするテキスト
+     * @returns {string} エスケープされたテキスト
+     */
+    function escapeHtml(text) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return String(text).replace(/[&<>"']/g, char => map[char]);
+    }
+
     // グローバルに公開
     window.NotificationManager = {
         checkAndShowWarning: checkAndShowWarning,
-        closeWarningModal: closeWarningModal
+        closeWarningModal: closeWarningModal,
+        showNotification: showNotification
     };
+
+    // グローバルスコープにも公開（後方互換性のため）
+    window.showNotification = showNotification;
 
     // 初期化を実行
     init();

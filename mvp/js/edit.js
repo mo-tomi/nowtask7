@@ -88,9 +88,39 @@ function handleEditFormSubmit(event) {
   const taskPriority = getElement('#editTaskPriority').value;
   const taskEmergency = getElement('#editTaskEmergency').checked;
 
-  // バリデーション
+  // バリデーション - タスク名
   if (!validateText(taskName, 1, 100)) {
-    console.warn('タスク名が不正です');
+    showErrorMessage('タスク名は1文字以上100文字以内で入力してください');
+    return;
+  }
+
+  // バリデーション - メモ
+  if (taskMemo && taskMemo.length > 500) {
+    showErrorMessage('メモは500文字以内で入力してください');
+    return;
+  }
+
+  // バリデーション - 所要時間
+  if (taskDuration && !validateNumber(taskDuration, 1, 1440)) {
+    showErrorMessage('所要時間は1分～1440分（24時間）の範囲で入力してください');
+    return;
+  }
+
+  // バリデーション - 開始時刻
+  if (taskStartTime && !validateTime(taskStartTime)) {
+    showErrorMessage('開始時刻の形式が正しくありません');
+    return;
+  }
+
+  // バリデーション - 終了時刻
+  if (taskEndTime && !validateTime(taskEndTime)) {
+    showErrorMessage('終了時刻の形式が正しくありません');
+    return;
+  }
+
+  // バリデーション - 時刻範囲
+  if (taskStartTime && taskEndTime && !validateTimeRange(taskStartTime, taskEndTime)) {
+    showErrorMessage('開始時刻と終了時刻の組み合わせが正しくありません');
     return;
   }
 
@@ -269,52 +299,85 @@ function attachSubtaskEventListeners() {
 
 // ===== イベントリスナー設定 =====
 
+// 初期化フラグ（重複実行を防ぐ）
+let editInitialized = false;
+
 /**
  * 編集機能の初期化
  */
 function initializeEdit() {
+  // 既に初期化済みの場合はスキップ
+  if (editInitialized) {
+    return;
+  }
+
   // 編集フォーム送信イベント
   const editForm = getElement('#editForm');
   if (editForm) {
+    // 既存のイベントリスナーを削除してから追加（重複防止）
+    editForm.removeEventListener('submit', handleEditFormSubmit);
     attachEventListener(editForm, 'submit', handleEditFormSubmit);
   }
 
   // 閉じるボタン
-  const modalClose = getElement('.modal-close');
+  const modalClose = getElement('#editModal .modal-close');
   if (modalClose) {
+    modalClose.removeEventListener('click', closeEditModal);
     attachEventListener(modalClose, 'click', closeEditModal);
   }
 
   // キャンセルボタン
   const editModalCancel = getElement('#editModalCancel');
   if (editModalCancel) {
+    editModalCancel.removeEventListener('click', closeEditModal);
     attachEventListener(editModalCancel, 'click', closeEditModal);
   }
 
   // オーバーレイクリック時に閉じる
   const modalOverlay = getElement('#modalOverlay');
   if (modalOverlay) {
-    attachEventListener(modalOverlay, 'click', closeEditModal);
+    // オーバーレイはモーダル外クリック時のみ閉じる
+    modalOverlay.removeEventListener('click', handleOverlayClick);
+    attachEventListener(modalOverlay, 'click', handleOverlayClick);
   }
 
   // サブタスク追加ボタン
   const addSubtaskBtn = getElement('#addSubtaskBtn');
   if (addSubtaskBtn) {
+    addSubtaskBtn.removeEventListener('click', handleAddSubtask);
     attachEventListener(addSubtaskBtn, 'click', handleAddSubtask);
   }
 
   // サブタスク入力欄でエンター押下時に追加
   const subtaskInput = getElement('#subtaskInput');
   if (subtaskInput) {
-    attachEventListener(subtaskInput, 'keypress', (event) => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        handleAddSubtask();
-      }
-    });
+    subtaskInput.removeEventListener('keypress', handleSubtaskInputKeypress);
+    attachEventListener(subtaskInput, 'keypress', handleSubtaskInputKeypress);
   }
 
+  // 初期化完了フラグをセット
+  editInitialized = true;
+
   console.log('タスク編集機能を初期化しました');
+}
+
+/**
+ * オーバーレイクリック時の処理（モーダル外をクリックした場合のみ閉じる）
+ */
+function handleOverlayClick(event) {
+  if (event.target === event.currentTarget) {
+    closeEditModal();
+  }
+}
+
+/**
+ * サブタスク入力欄でのキー押下処理
+ */
+function handleSubtaskInputKeypress(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    handleAddSubtask();
+  }
 }
 
 // ページ読み込み時に初期化
