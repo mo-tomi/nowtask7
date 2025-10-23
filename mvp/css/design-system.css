@@ -1,0 +1,173 @@
+/**
+ * デザインシステム - カラーパレット、タイポグラフィ、スペーシング
+ * すべてのデザイントークンをここで一元管理
+ */
+
+:root {
+  /* ============================================
+     カラーパレット
+     ============================================ */
+
+  /* メインカラー（グレー系 - モノクロデザイン） */
+  --color-primary-50: #fafafa;
+  --color-primary-100: #f5f5f5;
+  --color-primary-200: #efefef;
+  --color-primary-300: #e0e0e0;
+  --color-primary-400: #bdbdbd;
+  --color-primary-500: #666666;  /* メインカラー */
+  --color-primary-600: #555555;
+  --color-primary-700: #444444;
+  --color-primary-800: #333333;
+  --color-primary-900: #212121;
+
+  /* グレースケール */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #efefef;
+  --color-gray-300: #e0e0e0;
+  --color-gray-400: #bdbdbd;
+  --color-gray-500: #9e9e9e;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
+
+  /* テキストカラー */
+  --color-text-primary: #212121;
+  --color-text-secondary: #5f6368;
+  --color-text-disabled: #9e9e9e;
+  --color-text-inverse: #ffffff;
+
+  /* 成功カラー（グレー系 - モノクロデザイン） */
+  --color-success-50: #fafafa;
+  --color-success-100: #f5f5f5;
+  --color-success-500: #888888;  /* メイン成功色 */
+  --color-success-600: #777777;
+  --color-success-700: #666666;
+  --color-success-900: #444444;
+
+  /* エラー・削除カラー（グレー系 - モノクロデザイン） */
+  --color-error-50: #fafafa;
+  --color-error-100: #f5f5f5;
+  --color-error-500: #888888;  /* メインエラー色 */
+  --color-error-600: #777777;
+  --color-error-700: #666666;
+  --color-error-900: #444444;
+
+  /* 警告カラー（グレー系 - モノクロデザイン） */
+  --color-warning-50: #fafafa;
+  --color-warning-100: #f5f5f5;
+  --color-warning-500: #888888;  /* メイン警告色 */
+  --color-warning-600: #777777;
+  --color-warning-700: #666666;
+  --color-warning-900: #444444;
+
+  /* 情報カラー（グレー系 - モノクロデザイン） */
+  --color-info-50: #fafafa;
+  --color-info-100: #f5f5f5;
+  --color-info-500: #888888;
+  --color-info-600: #777777;
+  --color-info-700: #666666;
+
+  /* 背景カラー */
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f5;
+  --color-background-tertiary: #fafafa;
+  --color-background-overlay: rgba(0, 0, 0, 0.5);
+
+  /* ボーダーカラー */
+  --color-border-light: #e0e0e0;
+  --color-border-medium: #bdbdbd;
+  --color-border-dark: #757575;
+
+  /* 特殊カラー（グレー系 - モノクロデザイン） */
+  --color-gold: #666666;
+  --color-silver: #999999;
+  --color-bronze: #bbbbbb;
+
+  /* ============================================
+     シャドウ（影）
+     ============================================ */
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+
+  /* ============================================
+     スペーシング
+     ============================================ */
+
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-16: 4rem;     /* 64px */
+
+  /* ============================================
+     タイポグラフィ
+     ============================================ */
+
+  /* フォントサイズ */
+  --font-size-2xs: 0.625rem;   /* 10px - 極小サイズ（時間ラベルなど） */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+  --font-size-4xl: 2.25rem;    /* 36px */
+
+  /* 行間 */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+
+  /* フォントウェイト */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ============================================
+     角丸（Border Radius）
+     ============================================ */
+
+  --radius-none: 0;
+  --radius-sm: 0.125rem;  /* 2px */
+  --radius-md: 0.25rem;   /* 4px */
+  --radius-lg: 0.5rem;    /* 8px */
+  --radius-xl: 0.75rem;   /* 12px */
+  --radius-2xl: 1rem;     /* 16px */
+  --radius-full: 9999px;  /* 完全な円 */
+
+  /* ============================================
+     トランジション
+     ============================================ */
+
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+
+  /* ============================================
+     Z-Index
+     ============================================ */
+
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}

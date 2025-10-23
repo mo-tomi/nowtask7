@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_close",
+      "Bash(test:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(python -m http.server:*)",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_handle_dialog",
+      "mcp__playwright__browser_press_key",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_evaluate",
+      "Bash(dir:*)",
+      "Read(//c/**)",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\index.html'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\css\\style.css'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\css\\style-base.css'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\css\\style-components.css'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\css\\design-system.css'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\analytics.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\batch.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\calendar.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\charts.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\core.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\edit.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\filter.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\freeTime.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell -Command \"Get-Content ''C:\\Users\\tomim\\Desktop\\GitHub\\nowtask7\\mvp\\js\\gauge.js'' | Measure-Object -Line -Character | Select-Object Lines, Characters\")",
+      "Bash(powershell:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

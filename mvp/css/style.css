@@ -1,0 +1,258 @@
+/* カスタムスタイル - 細かい見た目の調整 */
+
+/* ============================================
+   全体の幅制限とオーバーフロー防止
+   ============================================ */
+
+section,
+.gauge-section,
+.input-section,
+.tasks-section,
+.calendar-section,
+.analytics-section,
+.ranking-section,
+.freetime-section,
+.routine-section,
+.template-section,
+.settings-section,
+.charts-section {
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* ============================================
+   レスポンシブデザイン
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .app-main {
+        padding: 1.5rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gauge-container {
+        padding: 1.25rem;
+    }
+
+    .input-section,
+    .tasks-section,
+    .gauge-section,
+    .calendar-section,
+    .analytics-section,
+    .ranking-section,
+    .freetime-section,
+    .routine-section,
+    .template-section,
+    .settings-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    section {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .gauge-container {
+        padding: 0.75rem;
+    }
+
+    .input-section,
+    .tasks-section,
+    .gauge-section,
+    .calendar-section,
+    .analytics-section,
+    .ranking-section,
+    .freetime-section,
+    .routine-section,
+    .template-section,
+    .settings-section {
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    section {
+        margin-bottom: 0.75rem;
+    }
+
+    .app-main {
+        padding: 0.5rem;
+    }
+}
+
+/* 超小型画面（320px以下）用 */
+@media (max-width: 320px) {
+    .gauge-container {
+        padding: 0.5rem;
+    }
+
+    .input-section,
+    .tasks-section,
+    .gauge-section,
+    .calendar-section,
+    .analytics-section,
+    .ranking-section,
+    .freetime-section,
+    .routine-section,
+    .template-section,
+    .settings-section {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    section {
+        margin-bottom: 0.5rem;
+    }
+
+    .app-main {
+        padding: 0.25rem;
+    }
+}
+
+/* ============================================
+   アニメーション・トランジション
+   ============================================ */
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.task-item {
+    animation: slideInUp 0.3s ease-out;
+}
+
+.gauge-container,
+.input-section,
+.tasks-section {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ============================================
+   細かい色と間隔の調整
+   ============================================ */
+
+.app-header {
+    background: #ffffff;
+}
+
+.gauge-section {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+.tasks-section {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+.calendar-section {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+.analytics-section {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+/* ============================================
+   スクロール効果
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ============================================
+   特殊な見た目要素
+   ============================================ */
+
+.gauge-time {
+    font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tasks-title,
+.calendar-title,
+.analytics-title {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   ホバーエフェクト
+   ============================================ */
+
+.task-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.task-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.task-item:hover::before {
+    left: 100%;
+}
+
+/* ============================================
+   フォーカス状態の強調
+   ============================================ */
+
+.task-input:focus {
+    border-color: #333;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+button:focus {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   ダークモードは設定しない（NG.md より）
+   ============================================ */
+
+/* ダークモード用の CSS は実装しません */
